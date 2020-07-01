@@ -7,7 +7,7 @@
   "description": "Add-ons for Playwright",
   "scripts": {
     "clean": "rimraf lib",
-    "compile": "npx tsc --pretty --project .",
+    "compile": "node_modules/.bin/tsc --pretty --project .",
     "lint": "eslint --ext .ts",
     "prepack": "npm run compile"
   },
