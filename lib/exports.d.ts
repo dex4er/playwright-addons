@@ -1,3 +1,3 @@
-import adblocker from './adblocker/index.js';
-import stealth from './stealth/index.js';
+import adblocker from './adblocker';
+import stealth from './stealth';
 export { adblocker, stealth };

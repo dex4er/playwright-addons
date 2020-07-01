@@ -18,7 +18,7 @@ export default async function (br: Browser | BrowserContext) {
 
         context.forEach(async c => {
             // Init evasions script on every page load
-            await c.addInitScript({ path: dirname(__dirname) + '/evasions.js' });
+            await c.addInitScript({ path: dirname(__dirname) + '/evasions' });
 
             // Properly set UA info (vanilla Playwright only sets the UA)
             const userAgent = (c as any)._options.userAgent || '';
