@@ -4,7 +4,7 @@ delete Object.getPrototypeOf(navigator).webdriver;
 // Fake webGL vendor + renderer
 try {
     // Remove traces of our Proxy ;-)
-    var stripErrorStack = stack =>
+    var stripErrorStack = (stack: string) =>
         stack
             .split('\n')
             .filter(line => !line.includes(`at Object.apply`))
@@ -12,7 +12,7 @@ try {
             .join('\n')
 
     const getParameterProxyHandler = {
-        get(target, key) {
+        get(target: any, key: any) {
             try {
                 // Mitigate Chromium bug (#130)
                 if (typeof target[key] === 'function') {
@@ -24,7 +24,7 @@ try {
                 throw err
             }
         },
-        apply: function (target, thisArg, args) {
+        apply: function (target: any, thisArg: any, args: any) {
             const param = (args || [])[0]
             // UNMASKED_VENDOR_WEBGL
             if (param === 37445) {

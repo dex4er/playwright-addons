@@ -4,6 +4,12 @@
 
 import blocker from '@cliqz/adblocker-playwright';
 import fetch from 'cross-fetch';
+import { Browser, BrowserContext } from 'playwright';
+
+export interface PlaywrightAddonsAdblockerOptions {
+    customList?: string[]
+    blockTrackers?: boolean
+}
 
 /**
  * Enable the ad blocker add-on
@@ -12,11 +18,11 @@ import fetch from 'cross-fetch';
  * @param {string} [options.customList] - provide a custom block list URL instead of the standard one
  * @param {boolean} [options.blockTrackers=false] - block trackers in addition to ads
  */
-export default async function (br, options = {}) {
-    if (typeof br !== 'object' || !(br.contexts || br.pages)) {
+export default async function (br: Browser | BrowserContext, options: PlaywrightAddonsAdblockerOptions = {}) {
+    if (typeof br !== 'object' || !((br as any).contexts || (br as any).pages)) {
         console.error('Need to provide a Playwright Browser or BrowserContext object');
     } else {
-        let bl;
+        let bl: blocker.PlaywrightBlocker;
         if (options.customList) {
             bl = await blocker.PlaywrightBlocker.fromLists(fetch, options.customList);
         } else if (options.blockTrackers) {
@@ -25,7 +31,7 @@ export default async function (br, options = {}) {
             bl = await blocker.PlaywrightBlocker.fromPrebuiltAdsOnly(fetch);
         }
 
-        let context = br.context ? br.context() : [br];
+        let context = (br as any).contexts ? (br as Browser).contexts() : [br as BrowserContext];
 
         context.forEach(c => {
             // Existing pages

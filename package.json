@@ -2,11 +2,14 @@
   "name": "playwright-addons",
   "version": "0.1.0",
   "type": "module",
-  "exports": "./exports.js",
+  "main": "lib/exports.js",
+  "typing": "lib/exports.d.ts",
   "description": "Add-ons for Playwright",
   "scripts": {
-    "docs": "jsdoc2md -f '*/*' >| api.md",
-    "lint": "eslint '*/*'"
+    "clean": "rimraf lib",
+    "compile": "tsc --pretty --project .",
+    "lint": "eslint --ext .ts",
+    "prepack": "npm run compile"
   },
   "author": {
     "name": "Niek van der Maas",
@@ -20,8 +23,13 @@
     "playwright": "^1.1.1"
   },
   "devDependencies": {
+    "@types/node": "^14.0.14",
+    "better-docs": "^2.0.1",
     "eslint": "^7.3.1",
     "jsdoc-to-markdown": "^6.0.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
   }
 }
